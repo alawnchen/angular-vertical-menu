@@ -1,0 +1,93 @@
+@bgColor: #f9f9f9;
+@lineHeight: 20px;
+@fontSize: 14px;
+@iconWidth: 20px;
+@link-color: #555555;
+@link-color-actived: #222222;
+@active-bg-color: #F9F9F9;
+@collapse-duration: 2.45s;
+@collapse-timing-function: ease;
+.sidebar-menu , .sidebar-menu ul {
+	font-size: @fontSize;
+	list-style: none;
+	list-style-position: outside;
+}
+
+.sidebar-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	a {
+		color: @link-color;
+		&:hover , &:active , &:focus {
+			outline: none;
+			text-decoration: none;
+			color: @link-color-actived;
+		}
+	}
+
+	& > li {
+		background-color: @bgColor;
+		line-height: @lineHeight;
+		margin: 0;
+		padding: 0;
+		cursor: pointer;
+		border-bottom: 1px solid #dbdbdb;
+		border-top: 1px solid #fff;
+		.active {
+			background-color: @active-bg-color;
+		}
+		i, span, a {
+			cursor: inehrit;
+		}
+		
+		& > a {
+			padding: 12px 5px 12px 15px;
+			display: block;
+			.fa , .glyphicon , .ion {
+				width: @iconWidth;
+			}
+		}
+	}
+
+	.treeview-menu {
+		height:90px;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		& > li {
+			margin-left: 10px;
+			cursor: pointer; 
+			& > a {
+				padding: 5px 5px 5px 15px;
+				display: block;
+				font-size: 14px;
+				margin: 0px 0px;
+				cursor:inherit;
+				.fa , .glyphicon , .ion {
+					width: @iconWidth;
+				}
+			}
+		}
+	}	
+}
+
+.badge-danger {
+  background-color: #d43f3a;
+}
+
+.badge-warning {
+  background-color: #d58512;
+}
+
+.badge-success {
+  background-color: #398439;
+}
+
+.badge-info {
+  background-color: #269abc;
+}
+
+.badge-inverse {
+  background-color: #333333;
+}

@@ -1,0 +1,17 @@
+.sass-cache
+.grunt
+
+# Ignore Node & Bower
+###################
+node_modules
+bower_components
+build
+.tmp
+tmp
+report
+
+# Ignore eclipse
+###################
+.project
+.classpath
+.settings/

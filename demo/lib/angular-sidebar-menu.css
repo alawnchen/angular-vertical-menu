@@ -1,0 +1,84 @@
+.sidebar-menu,
+.sidebar-menu ul {
+  font-size: 14px;
+  list-style: none;
+  list-style-position: outside;
+}
+.sidebar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sidebar-menu a {
+  color: #555555;
+}
+.sidebar-menu a:hover,
+.sidebar-menu a:active,
+.sidebar-menu a:focus {
+  outline: none;
+  text-decoration: none;
+  color: #222222;
+}
+.sidebar-menu > li {
+  background-color: #f9f9f9;
+  line-height: 20px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  border-bottom: 1px solid #dbdbdb;
+  border-top: 1px solid #fff;
+}
+.sidebar-menu > li .active {
+  background-color: #f9f9f9;
+}
+.sidebar-menu > li i,
+.sidebar-menu > li span,
+.sidebar-menu > li a {
+  cursor: inehrit;
+}
+.sidebar-menu > li > a {
+  padding: 12px 5px 12px 15px;
+  display: block;
+}
+.sidebar-menu > li > a .fa,
+.sidebar-menu > li > a .glyphicon,
+.sidebar-menu > li > a .ion {
+  width: 20px;
+}
+.sidebar-menu .treeview-menu {
+  height: 90px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-menu .treeview-menu > li {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.sidebar-menu .treeview-menu > li > a {
+  padding: 5px 5px 5px 15px;
+  display: block;
+  font-size: 14px;
+  margin: 0px 0px;
+  cursor: inherit;
+}
+.sidebar-menu .treeview-menu > li > a .fa,
+.sidebar-menu .treeview-menu > li > a .glyphicon,
+.sidebar-menu .treeview-menu > li > a .ion {
+  width: 20px;
+}
+.badge-danger {
+  background-color: #d43f3a;
+}
+.badge-warning {
+  background-color: #d58512;
+}
+.badge-success {
+  background-color: #398439;
+}
+.badge-info {
+  background-color: #269abc;
+}
+.badge-inverse {
+  background-color: #333333;
+}

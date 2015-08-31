@@ -1,0 +1,40 @@
+<div class="row">
+	<div class="well">
+	Add a badge declaring a <code>badge</code> attribute to the menu item. 
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<sidebar-menu config="ctrl.badgeCfg"></sidebar-menu>
+	</div>
+	<div class="col-md-9">
+		<div language="javascript" hljs>
+config = {
+	data : [ { 	"label" : "Mailbox",
+			"icon" : "fa-envelope",
+			"badge" : "16" }]
+}	
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="well">
+	<p>Add a css contextual class to your badge using the <code>badge.context</code> attribute. In that case declare the value of the badge through the use of the <code>badge.value</code> attribute.</p>
+	<p><em>Default css declare the following badge contextes, <code>badge-danger, badge-warning, badge-success, badge-info</code> and <code>badge-inverse</code>. If none fit your needs just create your own css class.</em></p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<sidebar-menu config="ctrl.badgeCfg2"></sidebar-menu>
+	</div>
+	<div class="col-md-9">
+		<div language="javascript" hljs>
+config = {
+	data : [ { 	"label" : "Mailbox",
+			"icon" : "fa-envelope",
+			"badge" : { "context" : "badge-success", "value"   : "8"} 
+			}]
+}	
+		</div>
+	</div>
+</div>

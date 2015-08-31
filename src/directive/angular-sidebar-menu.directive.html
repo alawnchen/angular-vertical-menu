@@ -1,0 +1,19 @@
+<ul class="sidebar-menu">
+	<li class="treeview" ng-class="{'active' : item.active}"
+		ng-repeat="item in vm.config.data track by $index">
+		<a ng-href ng-click="vm.toggle($event, item)">
+			<i class="fa {{::item.icon}}"></i>
+			<span>{{::item.label}}</span>
+			<span class="pull-right badge {{item.badge.context}}" ng-if="item.badge">{{item.badge.value || item.badge}}</span>
+			<i class="fa pull-right"
+				ng-class="{'fa-chevron-left' : !item.active, 'fa-chevron-down' : item.active}"
+				ng-if="vm.hasChildren(item)"></i>
+		</a>
+		<ul class="treeview-menu sbm-collapse-{{::vm.getId($index)}}"
+			ng-if="vm.hasChildren(item) && item.active">
+			<li ng-repeat="child in item.children track by $index"><a
+				ng-href ng-click="vm.toggle($event, child);"> <i
+					class="fa {{::vm.getItemIcon(child)}}"></i><span>{{::child.label}}</span>
+			</a></li>
+		</ul></li>
+</ul>

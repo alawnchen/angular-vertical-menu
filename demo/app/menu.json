@@ -1,0 +1,18 @@
+[
+	{
+		"label" : "Basic Usage",
+		"route" : "#basic-usage"
+	}	,
+	{
+		"label" : "Bullet icon",
+		"route" : "#bullet-icon"
+	},
+	{
+		"label" : "Animation",
+		"route" : "#animation"
+	},
+	{
+		"label" : "Badge",
+		"route" : "#badge"
+	}
+]
