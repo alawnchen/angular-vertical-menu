@@ -1,7 +1,6 @@
-# Angular sidebar menu %>
+# angular-vertical-menu
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version <%= pkg.version %>.
+Simple vertical menu.
 
 ## Build & development
 

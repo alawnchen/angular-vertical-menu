@@ -5,7 +5,7 @@ module.exports = function() {
     var temp = './tmp/';
     var report = './report/';
 
-    var module = 'angular-sidebar-menu';
+    var module = 'angular-vertical-menu';
 
     var wiredep = require('wiredep');
     var nodeModules = 'node_modules';
@@ -38,10 +38,10 @@ module.exports = function() {
 	templateCache : {
 	    file : 'templates.js',
 	    options : {
-		module : 'angularSidebarMenu',
+		module : 'angularVerticalMenu',
 		standAlone : false,
 		transformUrl: function(url) {
-		    return 'templates/angular-sidebar-menu.directive.html';
+		    return 'templates/angular-vertical-menu.directive.html';
 		}
 	    }
 	},

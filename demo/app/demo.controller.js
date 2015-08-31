@@ -1,6 +1,6 @@
-angular.module('angularSidebarMenuDemo').controller('angularSlideMenuDemoCtrl', AngularSlideMenuDemoCtrl);
+angular.module('angularVerticalMenuDemo').controller('angularVerticalMenuDemoCtrl', AngularVerticalMenuDemoCtrl);
 
-AngularSlideMenuDemoCtrl.$inject = [ '$scope', '$http', '$log' ];
+AngularVerticalMenuDemoCtrl.$inject = [ '$scope', '$http', '$log' ];
 
 /**
  * 
@@ -8,7 +8,7 @@ AngularSlideMenuDemoCtrl.$inject = [ '$scope', '$http', '$log' ];
  * @param $http
  * @param $log
  */
-function AngularSlideMenuDemoCtrl($scope, $http, $log) {
+function AngularVerticalMenuDemoCtrl($scope, $http, $log) {
     var vm = this;
 
     var menu = [ {

@@ -1,13 +1,14 @@
+angular.module('angularVerticalMenu', []);
 
     'use strict';
     
-angular.module('angularSidebarMenu').directive('sidebarMenu', SidebarMenu);
+angular.module('angularVerticalMenu').directive('verticalMenu', VerticalMenu);
 
 /**
  * 
  * 
  */
-function SidebarMenu() {
+function VerticalMenu() {
 
     function compile( element, attributes) {
 	// get the height of an individual sub menu item, to be used in
@@ -27,19 +28,19 @@ function SidebarMenu() {
 	replace : true,
 	scope : {
 	},
-	controller : SidebarMenuController,
+	controller : VerticalMenuController,
 	controllerAs : 'vm',
 	bindToController : {
 	    id : '@',
 	    config : '='
 	},
-	templateUrl : 'templates/angular-sidebar-menu.directive.html',
+	templateUrl : 'templates/angular-vertical-menu.directive.html',
 	compile : compile
     };
     return ddo;
 }
 
-SidebarMenuController.$inject = [ '$rootScope', '$location' ];
+VerticalMenuController.$inject = [ '$rootScope', '$location' ];
 
 /**
  * 
@@ -47,7 +48,7 @@ SidebarMenuController.$inject = [ '$rootScope', '$location' ];
  * @param $location
  * @param $timeout
  */
-function SidebarMenuController($rootScope, $location) {
+function VerticalMenuController($rootScope, $location) {
     
     var vm = this;
     /**
@@ -76,7 +77,7 @@ function SidebarMenuController($rootScope, $location) {
 	    animation = angular.extend({}, animation, vm.config.animation);
 	}
 	
-	return '.sidebar-menu .sbm-collapse-' + id + ' { \
+	return '.vertical-menu .sbm-collapse-' + id + ' { \
 			-webkit-animation-duration: ' + animation.duration + 's; \
 			animation-duration: ' + animation.duration + '5s; \
 			-webkit-animation-timing-function: ' + animation.timing + '; \
@@ -86,25 +87,25 @@ function SidebarMenuController($rootScope, $location) {
         		overflow: hidden; \
         		opacity: 1; \
         	} \
-                .sidebar-menu .sbm-collapse-' + id + '.ng-enter {\
+                .vertical-menu .sbm-collapse-' + id + '.ng-enter {\
                     visibility: hidden;\
                     -webkit-animation-name: expand-' + id + ';\
                             animation-name: expand-' + id + ';\
                     -webkit-animation-play-state: paused;\
                             animation-play-state: paused;\
                 }\
-        	.sidebar-menu .sbm-collapse-' + id + '.ng-enter.ng-enter-active {\
+        	.vertical-menu .sbm-collapse-' + id + '.ng-enter.ng-enter-active {\
                     visibility: visible;\
                     -webkit-animation-play-state: running;\
                             animation-play-state: running;\
         	}\
-                .sidebar-menu .sbm-collapse-' + id + '.ng-leave {\
+                .vertical-menu .sbm-collapse-' + id + '.ng-leave {\
                     -webkit-animation-name: collapse-' + id + ';\
                             animation-name: collapse-' + id + ';\
                     -webkit-animation-play-state: paused;\
                             animation-play-state: paused;\
                 }\
-                .sidebar-menu .sbm-collapse-' + id + '.ng-leave.ng-leave-active {\
+                .vertical-menu .sbm-collapse-' + id + '.ng-leave.ng-leave-active {\
                     -webkit-animation-play-state: running;\
                             animation-play-state: running;\
                 }';
@@ -195,3 +196,5 @@ function SidebarMenuController($rootScope, $location) {
     }
 }
 
+
+angular.module("angularVerticalMenu").run(["$templateCache", function($templateCache) {$templateCache.put("templates/angular-vertical-menu.directive.html","<ul class=vertical-menu><li class=treeview ng-class=\"{\'active\' : item.active}\" ng-repeat=\"item in vm.config.data track by $index\"><a ng-href ng-click=\"vm.toggle($event, item)\"><i class=\"fa {{::item.icon}}\"></i> <span>{{::item.label}}</span> <span class=\"pull-right badge {{item.badge.context}}\" ng-if=item.badge>{{item.badge.value || item.badge}}</span> <i class=\"fa pull-right\" ng-class=\"{\'fa-chevron-left\' : !item.active, \'fa-chevron-down\' : item.active}\" ng-if=vm.hasChildren(item)></i></a><ul class=\"treeview-menu sbm-collapse-{{::vm.getId($index)}}\" ng-if=\"vm.hasChildren(item) && item.active\"><li ng-repeat=\"child in item.children track by $index\"><a ng-href ng-click=\"vm.toggle($event, child);\"><i class=\"fa {{::vm.getItemIcon(child)}}\"></i><span>{{::child.label}}</span></a></li></ul></li></ul>");}]);

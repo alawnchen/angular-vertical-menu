@@ -1,4 +1,4 @@
-angular.module('angularSidebarMenuDemo', [ 'ngRoute', 'ngSanitize', 'ngAnimate', 'hljs', 'angularSidebarMenu' ])
+angular.module('angularVerticalMenuDemo', [ 'ngRoute', 'ngSanitize', 'ngAnimate', 'hljs', 'angularVerticalMenu' ])
 	.config([ '$routeProvider', function($routeProvider) {
 
 	    $routeProvider.when('/basic-usage', {

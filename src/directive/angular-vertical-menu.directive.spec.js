@@ -1,11 +1,11 @@
 'use strict';
 
 /* jshint -W117, -W030 */
-describe('angular-sidebar-directive::controller', function() {
+describe('angular-vertical-directive::controller', function() {
 
     var rootScope;
 
-    beforeEach(module('angularSidebarMenu'));
+    beforeEach(module('angularVerticalMenu'));
 
     afterEach(function() {
 	if (rootScope) {
@@ -14,13 +14,13 @@ describe('angular-sidebar-directive::controller', function() {
     });
 
     it('should return default bullet icon', function() {
-	var ctrl = new SidebarMenuController();
+	var ctrl = new VerticalMenuController();
 	ctrl.config = {};
 	expect(ctrl.getDefaultIcon()).to.eql(ctrl.DEFAULT_BULLET_ICON);
     });
 
     it('should return configured default bullet icon', function() {
-	var ctrl = new SidebarMenuController();
+	var ctrl = new VerticalMenuController();
 	var icon = 'my-custom-icon';
 	ctrl.config = {
 		default : {
@@ -31,14 +31,14 @@ describe('angular-sidebar-directive::controller', function() {
     });
     
     it('should return the default bullet icon for item with no icon', function(){
-	var ctrl = new SidebarMenuController();
+	var ctrl = new VerticalMenuController();
 	ctrl.config = {};
 	var item = {};
 	expect(ctrl.getItemIcon(item)).to.eql(ctrl.DEFAULT_BULLET_ICON);
     });
     
     it('should return configured icon for item', function(){
-	var ctrl = new SidebarMenuController();
+	var ctrl = new VerticalMenuController();
 	ctrl.config = {};
 	var icon = 'my-custom-icon';
 	var item = {icon : icon};
@@ -47,21 +47,21 @@ describe('angular-sidebar-directive::controller', function() {
     
     
     it('should evaluate if an item does not have any children', function(){
-	var ctrl = new SidebarMenuController();
+	var ctrl = new VerticalMenuController();
 	ctrl.config = {};
 	var item = {};
 	expect(ctrl.hasChildren(item)).to.eql(false);
     });
     
     it('should evaluate if an item have some children', function(){
-	var ctrl = new SidebarMenuController();
+	var ctrl = new VerticalMenuController();
 	ctrl.config = {};
 	var item = {children:[]};
 	expect(ctrl.hasChildren(item)).to.eql(true);
     });
     
     it('should activate item with children', function(){
-	var ctrl = new SidebarMenuController();
+	var ctrl = new VerticalMenuController();
 	ctrl.config = {};
 	var item = {children:[]};
 	ctrl.toggle($.Event('click'),item);
@@ -69,7 +69,7 @@ describe('angular-sidebar-directive::controller', function() {
     });
     
     it('should not activate item without children', function(){
-	var ctrl = new SidebarMenuController();
+	var ctrl = new VerticalMenuController();
 	ctrl.config = {};
 	var item = {};
 	ctrl.toggle($.Event('click'),item);
@@ -78,7 +78,7 @@ describe('angular-sidebar-directive::controller', function() {
     
     it('should follow href linked item', inject(function(_$rootScope_, _$location_){
 	rootScope = _$rootScope_;
-	var ctrl = new SidebarMenuController(rootScope, _$location_);
+	var ctrl = new VerticalMenuController(rootScope, _$location_);
 	ctrl.config = {};
 	var path = 'my-path';
 	var item = {href:path};
@@ -89,7 +89,7 @@ describe('angular-sidebar-directive::controller', function() {
     
     it('should call callback function associated with the item', inject(function(_$rootScope_, _$location_){
 	rootScope = _$rootScope_;
-	var ctrl = new SidebarMenuController(rootScope, _$location_);
+	var ctrl = new VerticalMenuController(rootScope, _$location_);
 	var callback = function(){};
 	ctrl.config = {
 		data : [{
@@ -105,17 +105,17 @@ describe('angular-sidebar-directive::controller', function() {
 });
 
 
-describe('angular-sidebar-directive::directive', function() {
+describe('angular-vertical-directive::directive', function() {
     
     var el, scope, $compile;
     
-    beforeEach(module('angularSidebarMenu'));
+    beforeEach(module('angularVerticalMenu'));
     
     beforeEach(inject(function(_$compile_, _$rootScope_){
 	$compile = _$compile_;
 	scope = _$rootScope_.$new();
 	
-	el = angular.element('<sidebar-menu config="config"></sidebar-menu>');
+	el = angular.element('<vertical-menu config="config"></vertical-menu>');
     }));
     
     afterEach(function() {
