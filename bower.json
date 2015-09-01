@@ -1,11 +1,38 @@
 {
-  "name": "angular-slide-menu-demo",
+  "name": "angular-vertical-menu",
+  "description" : "Simple vertical menu",
   "version": "0.0.0",
+  "keywords": [
+  	"menu"
+  ],
+  "authors" : {
+  	 "name": "Gilles Navarro" 
+  },
+  "repository": {
+  	"type": "git",
+  	"url": "git://github.com/gnavarro77/angular-vertical-menu"
+	},
+  "main" : [
+	"build/angular-vertical-menu.js",
+	"build/angular-vertical-menu.css"  	
+  ],
   "dependencies": {
-    "angular": "latest"
+    "angular": "latest",
+    "bootstrap-css-only": "latest",
+    "components-font-awesome": "latest"
   },
   "devDependencies": {
     "angular-mocks": "latest",
     "jquery": "~2.1.4"
-  }
+  },
+  "license": "MIT",
+  "ignore" : [
+	"**/.*",  	
+	"node_modules",
+	"bower_components",
+	"*.js",
+	"*.json",
+	"src/**",
+	"demo/**"
+  ]
 }
