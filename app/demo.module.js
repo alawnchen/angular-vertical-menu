@@ -12,7 +12,7 @@ angular.module('angularVerticalMenuDemo', [ 'ngRoute', 'ngSanitize', 'ngAnimate'
 	    }).when('/route/save', {
 		templateUrl : 'app/route.html'
 	    }).otherwise({
-		redirectTo : '/'
+		redirectTo : '/basic-usage'
 	    });
 
 	} ]);
