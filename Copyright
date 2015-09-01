@@ -1,0 +1,6 @@
+/*!
+ * <%= pkg.name %> - v<%= pkg.version %> - <%= new Date().toISOString().split('T')[0] %>
+ * <%= pkg.repository.url %>
+ * Copyright (c) <%= new Date().getFullYear() %> ; Licensed <%= pkg.license %>
+ */
+ 

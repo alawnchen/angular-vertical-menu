@@ -1,8 +1,10 @@
 var config = require('./gulp.config')();
+var pkg = require('./package.json');
 var del = require('del');
 var gulp = require('gulp');
 var path = require('path');
 var _ = require('lodash');
+var fs = require('fs');
 var $ = require('gulp-load-plugins')({
     lazy : true
 });
@@ -41,6 +43,15 @@ gulp.task('build-css', [ 'styles' ], function() {
     return gulp.src(config.temp + '*.css').pipe($.concat(config.module + '.css')).pipe(gulp.dest(config.build)).pipe(
 	    $.csso()).pipe($.rename({
 	extname : '.min.css'
+    })).pipe(gulp.dest(config.build));
+});
+
+gulp.task('copyright', [ 'build-js', 'build-css' ], function() {
+    var copyright = fs.readFileSync('Copyright');
+    gulp.src(config.build + '/**.*')
+    // .pipe($.concat('concat-copyright.js'))
+    .pipe($.header(copyright, {
+	pkg : pkg
     })).pipe(gulp.dest(config.build));
 });
 
@@ -114,9 +125,8 @@ gulp.task('demo-watch', function() {
 
 gulp.task('deploy-demo', function() {
     var ghPages = require('gulp-gh-pages');
-    return gulp.src('./demo/**/*')
-      .pipe(ghPages());
-  });
+    return gulp.src('./demo/**/*').pipe(ghPages());
+});
 
 /**
  * vet the code and create coverage report
@@ -156,6 +166,46 @@ gulp.task('clean-code', function(done) {
     var files = [].concat(config.temp + '**/*', config.build + '**/*');
     clean(files, done);
 });
+
+gulp.task('patch', function() {
+    return inc('patch');
+})
+gulp.task('feature', function() {
+    return inc('minor');
+})
+gulp.task('release', function() {
+    return inc('major');
+})
+
+/**
+ * Bumping version number and tagging the repository with it. Please read
+ * http://semver.org/
+ * 
+ * You can use the commands
+ * 
+ * gulp patch # makes v0.1.0 → v0.1.1 gulp feature # makes v0.1.1 → v0.2.0 gulp
+ * release # makes v0.2.1 → v1.0.0
+ * 
+ * To bump the version numbers accordingly after you did a patch, introduced a
+ * feature or made a backwards-incompatible release.
+ */
+function inc(importance) {
+    // get all the files to bump version in
+    return gulp.src([ './package.json', './bower.json' ])
+    // bump the version number in those files
+    .pipe(bump({
+	type : importance
+    }))
+    // save it back to filesystem
+    .pipe(gulp.dest('./'))
+    // commit the changed version number
+    .pipe(git.commit('bumps package version'))
+
+    // read only one file to get the version number
+    .pipe(filter('package.json'))
+    // **tag it in the repository**
+    .pipe(tag_version());
+}
 
 /**
  * Delete all files in a given path

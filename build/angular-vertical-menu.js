@@ -1,4 +1,9 @@
-angular.module('angularVerticalMenu', []);
+/*!
+ * angular-vertical-menu - v0.0.0 - 2015-09-01
+ * https://github.com/gnavarro77/angular-vertical-menu
+ * Copyright (c) 2015 ; Licensed MIT
+ */
+ angular.module('angularVerticalMenu', []);
 
     'use strict';
     
