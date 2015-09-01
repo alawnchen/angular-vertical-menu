@@ -1,0 +1,43 @@
+<div class="row">
+	<div class="well">
+	You can associate either a change of location using a <code>href</code> attribute (<code>File > Save</code>) or a function execution using a <code>callback</code> attribute (<code>File > Save as...</code>) to menu items. 
+	</div>
+</div>
+<div class="row">
+<div class="col-md-3">
+	<vertical-menu config="ctrl.config"></vertical-menu>
+	<div class="well" ng-if="ctrl.msg">
+		{{ctrl.msg}}
+	</div>
+</div>
+
+<div class="col-md-9">
+	<h3>Markup</h3>
+	<div hljs><vertical-menu config="config"></vertical-menu></div>
+	
+	<h3>Controller</h3>
+<div language="javascript" hljs>
+config = [ {
+	icon : 'fa-file-o',
+	label : 'File',
+	children : [ 
+		{label : 'Save', icon : 'fa-floppy-o', href : '/file/save'}, 
+		{label : 'Save as...', icon : 'fa-floppy-o', 
+		callback : function(item){
+				// do whatever you need
+			}
+		}, 
+		{label : 'Refresh', icon : 'fa-refresh'} 
+	]}, {
+	icon : 'fa-plane',
+	label : 'Edit',
+	children : [ 
+		{label : 'Cut', icon : 'fa-cut'}, 
+		{label : 'Copy', icon : 'fa-files-o'}, 
+		{label : 'Paste', icon : 'fa-clipboard'} 
+	]} 
+];
+</div>
+</div>
+</div>
+

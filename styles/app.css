@@ -1,0 +1,13 @@
+body {
+	padding-top: 51px;
+}
+
+.sidebar {
+	padding: 20px;
+	background-color: #f5f5f5;
+	border-right: 1px solid #eee;
+}
+
+.main {
+	background-color: #F4F4F4;
+}

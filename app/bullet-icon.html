@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="well">
+	If you don't associate icons with sub menu items the default bullet icon <code>fa-circle-o</code> is used. You can declare your own adding an attribut <code>default.icon</code> to your config. 
+	</div>
+</div>
+<div class="row">
+
+<div class="col-md-3">
+	<vertical-menu config="ctrl.defaultBulletIconCfg"></vertical-menu>
+</div>
+
+<div class="col-md-3">
+	<vertical-menu config="ctrl.customBulletIconCfg"></vertical-menu>
+</div>
+
+<div class="col-md-6">
+	<div language="javascript" hljs>
+config = {
+	default : {
+		icon : 'fa-plus'
+	},
+    data : [...]
+}	
+	</div>
+</div>
+
+</div>
+</div>
+

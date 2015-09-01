@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="well">
+	<p>Enable toggle animation effect using the <code>animation</code> attribute. You can customize the animation effect defining custom values to the <code>animation.duration</code> and <code>animation.timing</code> attributes.</p>
+	<em>Animation effect is based on <code>css3</code> animation capabilities that might not be implemented outside of the newest browsers versions.</em>  
+	</div>
+</div>
+<div class="row">
+
+<div class="col-md-3">
+	<vertical-menu config="ctrl.animationCfg"></vertical-menu>
+</div>
+
+<div class="col-md-3">
+	<div language="javascript" hljs>
+config = {
+	animation:true,
+	data : [...]
+}	
+	</div>
+</div>
+<div class="col-md-3">
+	<vertical-menu id="custom" config="ctrl.customAnimationCfg"></vertical-menu>
+</div>
+<div class="col-md-3">
+	<div language="javascript" hljs>
+config = {
+	animation:{
+		duration : 1.2,
+		timing : 'linear'
+	},
+	data : [...]
+}	
+	</div>
+</div>
+</div>
+</div>
+
