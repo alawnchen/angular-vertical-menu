@@ -112,6 +112,12 @@ gulp.task('demo-watch', function() {
     }));
 });
 
+gulp.task('deploy-demo', function() {
+    var ghPages = require('gulp-gh-pages');
+    return gulp.src('./demo/**/*')
+      .pipe(ghPages());
+  });
+
 /**
  * vet the code and create coverage report
  * 

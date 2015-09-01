@@ -1,17 +1,17 @@
 {
   "name": "angular-vertical-menu",
-  "description" : "Simple vertical menu",
+  "description": "Simple vertical menu",
   "version": "0.0.0",
-  "authors" : {
-  	 "name": "Gilles Navarro" 
+  "authors": {
+    "name": "Gilles Navarro"
   },
   "repository": {
-	"type": "git",
-  	"url": "git://github.com/gnavarro77/angular-vertical-menu"
+    "type": "git",
+    "url": "git://github.com/gnavarro77/angular-vertical-menu"
   },
-  "main" : [
-	"build/angular-vertical-menu.js",
-	"build/angular-vertical-menu.css"  	
+  "main": [
+    "build/angular-vertical-menu.js",
+    "build/angular-vertical-menu.css"
   ],
   "devDependencies": {
     "gulp": "~3.9.0",
@@ -52,7 +52,8 @@
     "phantomjs": "~1.9.17",
     "gulp-jshint": "~1.11.2",
     "jshint-stylish": "~2.0.1",
-    "gulp-jscs": "~2.0.0"
+    "gulp-jscs": "~2.0.0",
+    "gulp-gh-pages": "~0.5.2"
   },
   "license": "MIT"
 }
