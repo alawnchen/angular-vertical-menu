@@ -1,5 +1,7 @@
 # angular-vertical-menu
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 Simple vertical menu.
 ## Demo
 As demo is worth a thousand words, check it out [**demo**](http://gnavarro77.github.io/angular-vertical-menu/)
