@@ -15,10 +15,22 @@ gulp.task('default', [ 'help' ]);
 /**
  * Run tests
  */
-gulp.task('test', [ 'templatecache' ], function(done) {
+gulp.task('test', function(done) {
     var karma = require('karma').server;
     karma.start({
 	configFile : __dirname + '/karma.conf.js'
+    }, function(karmaResult) {
+	done();
+    });
+});
+
+/**
+ * Run continuous integration tests (travis)
+ */
+gulp.task('test-ci', function(done) {
+    var karma = require('karma').server;
+    karma.start({
+	configFile : __dirname + '/travis.karma.conf.js'
     }, function(karmaResult) {
 	done();
     });

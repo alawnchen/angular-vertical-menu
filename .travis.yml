@@ -7,4 +7,4 @@ before_script:
   - 'bower install'
 
 after_script:
-  - 'gulp test'
+  - 'gulp test-ci'
