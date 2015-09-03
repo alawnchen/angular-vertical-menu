@@ -7,4 +7,4 @@ before_script:
   - 'bower install'
   
   after_script:
-  - 'grunt test build-js build-css'
+  - 'grunt test'
