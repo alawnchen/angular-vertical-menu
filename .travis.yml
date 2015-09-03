@@ -1,6 +1,7 @@
 language: node_js
 
 before_script:
+  - 'npm install bower karma gulp'
   - 'npm install'
   - 'bower install'
 
