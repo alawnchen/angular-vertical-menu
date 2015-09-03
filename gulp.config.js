@@ -2,7 +2,7 @@ module.exports = function() {
 
     var src = './src/';
     var demo = './demo/';
-    var temp = './tmp/';
+    var temp = './.tmp/';
     var report = './report/';
 
     var module = 'angular-vertical-menu';

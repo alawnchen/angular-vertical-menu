@@ -13,21 +13,19 @@ gulp.task('help', $.taskListing);
 gulp.task('default', [ 'help' ]);
 
 /**
- * 
+ * Run tests
  */
 gulp.task('test', [ 'templatecache' ], function(done) {
     var karma = require('karma').server;
     karma.start({
 	configFile : __dirname + '/karma.conf.js'
-    // exclude : excludeFiles,
-    // singleRun : !!singleRun
     }, function(karmaResult) {
 	done();
     });
 });
 
 /**
- * 
+ * Build and minify js files
  */
 gulp.task('build-js', [ 'templatecache' ], function(cb) {
     log('Optimizing files ');
@@ -38,19 +36,21 @@ gulp.task('build-js', [ 'templatecache' ], function(cb) {
 		extname : '.min.js'
 	    })).pipe(gulp.dest(config.build));
 });
-
+/**
+ * Build and minify css files
+ */
 gulp.task('build-css', [ 'styles' ], function() {
     return gulp.src(config.temp + '*.css').pipe($.concat(config.module + '.css')).pipe(gulp.dest(config.build)).pipe(
 	    $.csso()).pipe($.rename({
 	extname : '.min.css'
     })).pipe(gulp.dest(config.build));
 });
-
+/**
+ * Add copyright info to built files
+ */
 gulp.task('copyright', [ 'build-js', 'build-css' ], function() {
     var copyright = fs.readFileSync('Copyright');
-    gulp.src(config.build + '/**.*')
-    // .pipe($.concat('concat-copyright.js'))
-    .pipe($.header(copyright, {
+    gulp.src(config.build + '/**.*').pipe($.header(copyright, {
 	pkg : pkg
     })).pipe(gulp.dest(config.build));
 });
@@ -76,8 +76,7 @@ gulp.task('wiredep', function() {
     log('Wiring the bower dependencies into the html');
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions();
-
-    var js = gulp.src([].concat(config.demo.lib + '**/*', config.demo.js, config.demo.css), {
+    var js = gulp.src([ config.demo.lib + '**/*' ].concat(config.demo.js, config.demo.css), {
 	read : false
     });
     return gulp.src(config.index).pipe($.inject(js, {
@@ -102,7 +101,6 @@ gulp.task('copy-demo', function() {
     log('Copy optimized files to demo');
     var stream = gulp.src([ config.build + config.module + '.js', config.build + config.module + '.css' ]).pipe(
 	    $.debug()).pipe(gulp.dest(config.demo.lib));
-
     return stream;
 });
 
@@ -123,9 +121,11 @@ gulp.task('demo-watch', function() {
     }));
 });
 
+/**
+ * Deploy demo folder to gh-pages branch
+ */
 gulp.task('deploy-demo', function() {
-    var ghPages = require('gulp-gh-pages');
-    return gulp.src('./demo/**/*').pipe(ghPages());
+    return gulp.src('./demo/**/*').pipe($.ghPages());
 });
 
 /**
@@ -135,10 +135,7 @@ gulp.task('deploy-demo', function() {
  */
 gulp.task('vet', function() {
     log('Analyzing source with JSHint and JSCS');
-
-    return gulp.src(config.alljs)
-    // .pipe($.if(args.verbose, $.print()))
-    .pipe($.jshint()).pipe($.jshint.reporter('jshint-stylish', {
+    return gulp.src(config.alljs).pipe($.jshint()).pipe($.jshint.reporter('jshint-stylish', {
 	verbose : true
     })).pipe($.jshint.reporter('fail')).pipe($.jscs());
 });
@@ -156,6 +153,54 @@ gulp.task('templatecache', [ 'clean-code' ], function() {
 	    gulp.dest(config.temp));
 });
 
+gulp.task('changelog', function() {
+    return gulp.src('CHANGELOG.md', {
+	buffer : false
+    }).pipe($.conventionalChangelog({
+	preset : 'angular',
+	releaseCount: 0
+    })).pipe(gulp.dest('./'));
+});
+
+/**
+ * gulp patch # makes v0.1.0 → v0.1.1
+ */
+gulp.task('patch', function() {
+    return inc('patch');
+})
+/**
+ * gulp feature # makes v0.1.1 → v0.2.0
+ */
+gulp.task('feature', function() {
+    return inc('minor');
+})
+/**
+ * gulp release # makes v0.2.1 → v1.0.0
+ */
+gulp.task('release', function() {
+    return inc('major');
+})
+
+/**
+ * Bumping version number and tagging the repository with it.
+ */
+function inc(importance) {
+    // get all the files to bump version in
+    return gulp.src([ './package.json', './bower.json' ])
+    // bump the version number in those files
+    .pipe($.bump({
+	type : importance
+    }))
+    // save it back to filesystem
+    .pipe(gulp.dest('./'))
+    // commit the changed version number
+    .pipe(git.commit('bumps package version'))
+    // read only one file to get the version number
+    .pipe(filter('package.json'))
+    // **tag it in the repository**
+    .pipe(tag_version());
+}
+
 /**
  * Remove all js and html from the build and temp folders
  * 
@@ -163,49 +208,9 @@ gulp.task('templatecache', [ 'clean-code' ], function() {
  *                done - callback when complete
  */
 gulp.task('clean-code', function(done) {
-    var files = [].concat(config.temp + '**/*', config.build + '**/*');
+    var files = [ config.temp + '**' ].concat(config.build + '**');
     clean(files, done);
 });
-
-gulp.task('patch', function() {
-    return inc('patch');
-})
-gulp.task('feature', function() {
-    return inc('minor');
-})
-gulp.task('release', function() {
-    return inc('major');
-})
-
-/**
- * Bumping version number and tagging the repository with it. Please read
- * http://semver.org/
- * 
- * You can use the commands
- * 
- * gulp patch # makes v0.1.0 → v0.1.1 gulp feature # makes v0.1.1 → v0.2.0 gulp
- * release # makes v0.2.1 → v1.0.0
- * 
- * To bump the version numbers accordingly after you did a patch, introduced a
- * feature or made a backwards-incompatible release.
- */
-function inc(importance) {
-    // get all the files to bump version in
-    return gulp.src([ './package.json', './bower.json' ])
-    // bump the version number in those files
-    .pipe(bump({
-	type : importance
-    }))
-    // save it back to filesystem
-    .pipe(gulp.dest('./'))
-    // commit the changed version number
-    .pipe(git.commit('bumps package version'))
-
-    // read only one file to get the version number
-    .pipe(filter('package.json'))
-    // **tag it in the repository**
-    .pipe(tag_version());
-}
 
 /**
  * Delete all files in a given path
