@@ -5,6 +5,6 @@ before_script:
   - 'npm install -g bower karma gulp'
   - 'npm install'
   - 'bower install'
-  
-  after_script:
+
+after_script:
   - 'grunt test'
