@@ -126,7 +126,9 @@ describe('angular-vertical-directive::directive', function() {
     
     it('should display menu item', function(){
 	var lbl = 'myLabel';
-	scope.config = {data:[{label: lbl}]};
+	scope.config = {
+		data:[{label: lbl}]
+	};
 	$compile(el)(scope);
 	scope.$digest();
 	var items = el.find('li');
@@ -135,15 +137,18 @@ describe('angular-vertical-directive::directive', function() {
     });
     
     it('should display menu children when activated', function(){
-	scope.config = {data:[{label: 'item', children : [{label:'sub1'}, {label:'sub2'}]}]};
+	scope.config = {
+		data:[{	
+			  label: 'item', 
+			  children : [{label:'sub1'},{label:'sub2'}]
+		      }]
+	};
 	$compile(el)(scope);
 	scope.$digest();
 	var item = angular.element(el.find('li')[0]);
-	
-	var children = item.find('ul');
+	var children = item.find('.treeview-menu');
 	expect(children).to.be.empty;
-	item.triggerHandler('click');	
-	
+	angular.element(item.find('a').eq(0)).triggerHandler('click');	
 	expect(item.hasClass('active')).to.be.true;
 	
 	children = item.find('li');
@@ -156,7 +161,7 @@ describe('angular-vertical-directive::directive', function() {
      * Returns the label associated with the given item
      */
     function getLabel(item) {
-	var span = angular.element(item).find('span');
+	var span = angular.element(item).find('span').eq(0);
 	return angular.element(span).text();
     }
     

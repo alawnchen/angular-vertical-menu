@@ -75,7 +75,7 @@ module.exports = function() {
 
 	var options = {
 	    // config.specHelpers,
-	    files : [].concat(bowerFiles, src + '**/*.module.js', src + '**/*.js', temp + config.templateCache.file),
+	    files : [].concat(bowerFiles,src + '**/*.module.js', src + '**/*.js', src +"**/*.html"),
 	    exclude : [],
 	    coverage : {
 		dir : report + 'coverage',
