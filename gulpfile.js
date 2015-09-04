@@ -213,28 +213,8 @@ gulp.task('bump', function() {
  * Tag the project using version specified in pakage.json
  */
 gulp.task('tag', function() {
-    return gulp.src('./package.json').pipe($.git.commit('bumps package version')).pipe($.tagVersion());
+    return gulp.src('./package.json').pipe($.tagVersion());
 });
-
-// /**
-// * Bumping version number and tagging the repository with it.
-// */
-// function inc(importance) {
-// // get all the files to bump version in
-// return gulp.src([ './package.json', './bower.json' ])
-// // bump the version number in those files
-// .pipe($.bump({
-// type : importance
-// }))
-// // save it back to filesystem
-// .pipe(gulp.dest('./'))
-// // commit the changed version number
-// .pipe($.git.commit('bumps package version'))
-// // read only one file to get the version number
-// .pipe($.filter('package.json'))
-// // **tag it in the repository**
-// .pipe($.tagVersion());
-// }
 
 /**
  * Remove all js and html from the build and temp folders
