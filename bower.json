@@ -33,6 +33,8 @@
     "*.js",
     "*.json",
     "src/**",
-    "demo/**"
+    "demo/**",
+    "Copyright",
+    "CHANGELOG.md"
   ]
 }
