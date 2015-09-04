@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var path = require('path');
 var _ = require('lodash');
 var fs = require('fs');
+var args = require('yargs').argv;
 var $ = require('gulp-load-plugins')({
     lazy : true
 });
@@ -37,33 +38,36 @@ gulp.task('test-ci', function(done) {
 });
 
 /**
+ * Build the project
+ */
+gulp.task('build', [ 'build-js', 'build-css' ], function() {
+});
+
+/**
  * Build and minify js files
  */
 gulp.task('build-js', [ 'templatecache' ], function(cb) {
     log('Optimizing files ');
     var templateCache = config.temp + config.templateCache.file;
     var jsFiles = [].concat(config.js, templateCache);
-    return gulp.src(jsFiles).pipe($.concat(config.module + '.js')).pipe(gulp.dest(config.build)).pipe($.uglify()).pipe(
-	    $.rename({
-		extname : '.min.js'
-	    })).pipe(gulp.dest(config.build));
+    var copyright = fs.readFileSync('Copyright');
+    return gulp.src(jsFiles).pipe($.concat(config.module + '.js')).pipe($.header(copyright, {
+	pkg : pkg
+    })).pipe(gulp.dest(config.build)).pipe($.uglify()).pipe($.rename({
+	extname : '.min.js'
+    })).pipe($.header(copyright, {
+	pkg : pkg
+    })).pipe(gulp.dest(config.build));
 });
 /**
  * Build and minify css files
  */
 gulp.task('build-css', [ 'styles' ], function() {
-    return gulp.src(config.temp + '*.css').pipe($.concat(config.module + '.css')).pipe(gulp.dest(config.build)).pipe(
-	    $.csso()).pipe($.rename({
-	extname : '.min.css'
-    })).pipe(gulp.dest(config.build));
-});
-/**
- * Add copyright info to built files
- */
-gulp.task('copyright', [ 'build-js', 'build-css' ], function() {
     var copyright = fs.readFileSync('Copyright');
-    gulp.src(config.build + '/**.*').pipe($.header(copyright, {
+    return gulp.src(config.temp + '*.css').pipe($.concat(config.module + '.css')).pipe($.header(copyright, {
 	pkg : pkg
+    })).pipe(gulp.dest(config.build)).pipe($.csso()).pipe($.rename({
+	extname : '.min.css'
     })).pipe(gulp.dest(config.build));
 });
 
@@ -120,8 +124,8 @@ gulp.task('copy-demo', function() {
  * 
  */
 gulp.task('build-demo', function(cb) {
-    var runSequence = require('run-sequence');
-    runSequence([ 'build-js', 'build-css' ], 'copy-demo', 'wiredep', cb);
+    var runSequence = require('run-sequence').use(gulp);
+    runSequence('build', 'copy-demo', 'wiredep');
 });
 
 /**
@@ -170,48 +174,67 @@ gulp.task('changelog', function() {
 	buffer : false
     }).pipe($.conventionalChangelog({
 	preset : 'angular',
-	releaseCount: 0
+	releaseCount : 0
     })).pipe(gulp.dest('./'));
 });
 
 /**
- * gulp patch # makes v0.1.0 → v0.1.1
+ * Bump, build and tag version
  */
-gulp.task('patch', function() {
-    return inc('patch');
-})
-/**
- * gulp feature # makes v0.1.1 → v0.2.0
- */
-gulp.task('feature', function() {
-    return inc('minor');
-})
-/**
- * gulp release # makes v0.2.1 → v1.0.0
- */
-gulp.task('release', function() {
-    return inc('major');
+gulp.task('release', [ 'test-ci' ], function() {
+    var runSequence = require('run-sequence').use(gulp);
+    runSequence('bump', 'build');
 })
 
 /**
- * Bumping version number and tagging the repository with it.
+ * <p>
+ * Bump version using importance specified as argument
+ * </p>
+ * <p>
+ * ex : gulp bump --patch
+ * </p>
  */
-function inc(importance) {
-    // get all the files to bump version in
-    return gulp.src([ './package.json', './bower.json' ])
-    // bump the version number in those files
-    .pipe($.bump({
-	type : importance
-    }))
-    // save it back to filesystem
-    .pipe(gulp.dest('./'))
-    // commit the changed version number
-    .pipe(git.commit('bumps package version'))
-    // read only one file to get the version number
-    .pipe(filter('package.json'))
-    // **tag it in the repository**
-    .pipe(tag_version());
-}
+gulp.task('bump', function() {
+    var out = null;
+    var importances = [ 'patch', 'minor', 'major' ];
+    for ( var i in importances) {
+	if (importances[i] in args) {
+	    return gulp.src([ './package.json', './bower.json' ]).pipe($.bump({
+		type : importances[i]
+	    })).pipe(gulp.dest('./'));
+	}
+    }
+    if (true) {
+	throw new Error('bump task require to specify the importance (patch, minor, major)');
+    }
+});
+
+/**
+ * Tag the project using version specified in pakage.json
+ */
+gulp.task('tag', function() {
+    return gulp.src('./package.json').pipe($.git.commit('bumps package version')).pipe($.tagVersion());
+});
+
+// /**
+// * Bumping version number and tagging the repository with it.
+// */
+// function inc(importance) {
+// // get all the files to bump version in
+// return gulp.src([ './package.json', './bower.json' ])
+// // bump the version number in those files
+// .pipe($.bump({
+// type : importance
+// }))
+// // save it back to filesystem
+// .pipe(gulp.dest('./'))
+// // commit the changed version number
+// .pipe($.git.commit('bumps package version'))
+// // read only one file to get the version number
+// .pipe($.filter('package.json'))
+// // **tag it in the repository**
+// .pipe($.tagVersion());
+// }
 
 /**
  * Remove all js and html from the build and temp folders
