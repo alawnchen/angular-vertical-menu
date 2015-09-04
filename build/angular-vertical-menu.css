@@ -1,5 +1,5 @@
 /*!
- * angular-vertical-menu - v0.0.0 - 2015-09-01
+ * angular-vertical-menu - v0.0.1 - 2015-09-04
  * https://github.com/gnavarro77/angular-vertical-menu
  * Copyright (c) 2015 ; Licensed MIT
  */
